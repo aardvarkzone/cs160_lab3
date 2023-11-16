@@ -1102,10 +1102,10 @@ case 46:
 /* rule 46 can match eol */
 YY_RULE_SETUP
 #line 90 "lexer.l"
-{ int length = strlen(yytext) - 2; // Deduct 2 for the quotation marks
-                    char* literal = (char*) malloc(length + 1); // Allocate memory (+1 for the null terminator)
-                    strncpy(literal, yytext + 1, length); // Copy the string excluding the quotation marks
-                    literal[length] = '\0'; // Null-terminate the string
+{ int length = strlen(yytext) - 2; 
+                    char* literal = (char*) malloc(length + 1); 
+                    strncpy(literal, yytext + 1, length); 
+                    literal[length] = '\0';
                     yylval.u_base_charptr = literal;
                     return STRING_LITERAL;
                 }

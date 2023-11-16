@@ -167,15 +167,15 @@ LHS : IDENTIFIER { $$ = new Variable(new SymName($1)); }
     | DEREFERENCE IDENTIFIER { $$ = new DerefVariable(new SymName($2)); }
     ;
 
-ExpressionListOpt : ExpressionList
-                  |
+ExpressionListOpt : { $$ = new std::list<Expr_ptr>(); }
+                  | ExpressionList
 
 ExpressionList : Expression COMMA ExpressionList { $3->push_front($1); $$ = $3; }
                | Expression { $$ = new std::list<Expr_ptr> {$1}; }
                ;
 
 Expression : LPAREN Expression RPAREN { $$ = $2; }
-            | BAR Expression BAR { $$ = new AbsoluteValue($2); } 
+           | BAR Expression BAR { $$ = new AbsoluteValue($2); } 
            | AMP LHS { $$ = new AddressOf($2); } 
            | Expression AND Expression { $$ = new And($1, $3); }
            | Expression DIV Expression  { $$ = new Div($1, $3); } 

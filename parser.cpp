@@ -655,9 +655,9 @@ static const yytype_int8 yydefact[] =
        0,     0,     0,     0,    51,     0,     0,     0,    16,     0,
       50,    49,    36,    56,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    28,     0,
-       0,    63,    13,    31,    21,    20,     0,     0,    34,    35,
+       0,    63,    13,    30,    21,    20,     0,     0,    34,    35,
       37,    38,    39,    40,    41,    42,    43,    44,    45,    46,
-      47,    48,    23,    25,     0,    30,    33,     0,    52,     0,
+      47,    48,    23,    25,     0,    31,    33,     0,    52,     0,
        0,     0,    17,    24,    22,    32
 };
 
@@ -782,7 +782,7 @@ static const yytype_int8 yyr2[] =
        0,     2,     2,     0,     2,    10,     0,     1,     3,     3,
        1,     3,     4,     3,     0,     2,     5,     8,     0,     2,
        4,     4,     7,     5,     7,     5,     1,     1,     4,     2,
-       1,     0,     3,     1,     3,     3,     2,     3,     3,     3,
+       0,     1,     3,     1,     3,     3,     2,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     2,
        2,     1,     4,     1,     1,     1,     2,     1,     1,     1,
        1,     1,     1,     4
@@ -1713,200 +1713,206 @@ yyreduce:
 #line 1714 "parser.cpp"
     break;
 
+  case 30: /* ExpressionListOpt: %empty  */
+#line 170 "parser.ypp"
+                    { (yyval.u_expr_list) = new std::list<Expr_ptr>(); }
+#line 1720 "parser.cpp"
+    break;
+
   case 32: /* ExpressionList: Expression COMMA ExpressionList  */
 #line 173 "parser.ypp"
                                                  { (yyvsp[0].u_expr_list)->push_front((yyvsp[-2].u_expr)); (yyval.u_expr_list) = (yyvsp[0].u_expr_list); }
-#line 1720 "parser.cpp"
+#line 1726 "parser.cpp"
     break;
 
   case 33: /* ExpressionList: Expression  */
 #line 174 "parser.ypp"
                             { (yyval.u_expr_list) = new std::list<Expr_ptr> {(yyvsp[0].u_expr)}; }
-#line 1726 "parser.cpp"
+#line 1732 "parser.cpp"
     break;
 
   case 34: /* Expression: LPAREN Expression RPAREN  */
 #line 177 "parser.ypp"
                                       { (yyval.u_expr) = (yyvsp[-1].u_expr); }
-#line 1732 "parser.cpp"
+#line 1738 "parser.cpp"
     break;
 
   case 35: /* Expression: BAR Expression BAR  */
 #line 178 "parser.ypp"
-                                 { (yyval.u_expr) = new AbsoluteValue((yyvsp[-1].u_expr)); }
-#line 1738 "parser.cpp"
+                                { (yyval.u_expr) = new AbsoluteValue((yyvsp[-1].u_expr)); }
+#line 1744 "parser.cpp"
     break;
 
   case 36: /* Expression: AMP LHS  */
 #line 179 "parser.ypp"
                      { (yyval.u_expr) = new AddressOf((yyvsp[0].u_lhs)); }
-#line 1744 "parser.cpp"
+#line 1750 "parser.cpp"
     break;
 
   case 37: /* Expression: Expression AND Expression  */
 #line 180 "parser.ypp"
                                        { (yyval.u_expr) = new And((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1750 "parser.cpp"
+#line 1756 "parser.cpp"
     break;
 
   case 38: /* Expression: Expression DIV Expression  */
 #line 181 "parser.ypp"
                                         { (yyval.u_expr) = new Div((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1756 "parser.cpp"
+#line 1762 "parser.cpp"
     break;
 
   case 39: /* Expression: Expression EQUALS Expression  */
 #line 182 "parser.ypp"
                                           { (yyval.u_expr) = new Compare((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1762 "parser.cpp"
+#line 1768 "parser.cpp"
     break;
 
   case 40: /* Expression: Expression GT Expression  */
 #line 183 "parser.ypp"
                                        { (yyval.u_expr) = new Gt((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1768 "parser.cpp"
+#line 1774 "parser.cpp"
     break;
 
   case 41: /* Expression: Expression GTE Expression  */
 #line 184 "parser.ypp"
                                         { (yyval.u_expr) = new Gteq((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1774 "parser.cpp"
+#line 1780 "parser.cpp"
     break;
 
   case 42: /* Expression: Expression LT Expression  */
 #line 185 "parser.ypp"
                                       { (yyval.u_expr) = new Lt((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1780 "parser.cpp"
+#line 1786 "parser.cpp"
     break;
 
   case 43: /* Expression: Expression LTE Expression  */
 #line 186 "parser.ypp"
                                        { (yyval.u_expr) = new Lteq((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1786 "parser.cpp"
+#line 1792 "parser.cpp"
     break;
 
   case 44: /* Expression: Expression MINUS Expression  */
 #line 187 "parser.ypp"
                                           { (yyval.u_expr) = new Minus((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1792 "parser.cpp"
+#line 1798 "parser.cpp"
     break;
 
   case 45: /* Expression: Expression NOTEQUAL Expression  */
 #line 188 "parser.ypp"
                                             { (yyval.u_expr) = new Noteq((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1798 "parser.cpp"
+#line 1804 "parser.cpp"
     break;
 
   case 46: /* Expression: Expression OR Expression  */
 #line 189 "parser.ypp"
                                       { (yyval.u_expr) = new Or((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1804 "parser.cpp"
+#line 1810 "parser.cpp"
     break;
 
   case 47: /* Expression: Expression PLUS Expression  */
 #line 190 "parser.ypp"
                                          { (yyval.u_expr) = new Plus((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1810 "parser.cpp"
+#line 1816 "parser.cpp"
     break;
 
   case 48: /* Expression: Expression MUL Expression  */
 #line 191 "parser.ypp"
                                        { (yyval.u_expr) = new Times((yyvsp[-2].u_expr), (yyvsp[0].u_expr)); }
-#line 1816 "parser.cpp"
+#line 1822 "parser.cpp"
     break;
 
   case 49: /* Expression: NOT Expression  */
 #line 192 "parser.ypp"
                             {(yyval.u_expr) = new Not((yyvsp[0].u_expr));}
-#line 1822 "parser.cpp"
+#line 1828 "parser.cpp"
     break;
 
   case 50: /* Expression: MINUS Expression  */
 #line 193 "parser.ypp"
                               {(yyval.u_expr) = new Uminus((yyvsp[0].u_expr));}
-#line 1828 "parser.cpp"
+#line 1834 "parser.cpp"
     break;
 
   case 51: /* Expression: IDENTIFIER  */
 #line 194 "parser.ypp"
                         { (yyval.u_expr) = new Ident(new SymName((yyvsp[0].u_base_charptr))); }
-#line 1834 "parser.cpp"
+#line 1840 "parser.cpp"
     break;
 
   case 52: /* Expression: IDENTIFIER LBRACKET Expression RBRACKET  */
 #line 195 "parser.ypp"
                                                      { (yyval.u_expr) = new ArrayAccess(new SymName((yyvsp[-3].u_base_charptr)), (yyvsp[-1].u_expr)); }
-#line 1840 "parser.cpp"
+#line 1846 "parser.cpp"
     break;
 
   case 53: /* Expression: INT_LITERAL  */
 #line 196 "parser.ypp"
                          { (yyval.u_expr) = new IntLit(new Primitive((yyvsp[0].u_base_int))); }
-#line 1846 "parser.cpp"
+#line 1852 "parser.cpp"
     break;
 
   case 54: /* Expression: CHAR_LITERAL  */
 #line 197 "parser.ypp"
                           { (yyval.u_expr) = new CharLit(new Primitive((yyvsp[0].u_base_int))); }
-#line 1852 "parser.cpp"
+#line 1858 "parser.cpp"
     break;
 
   case 55: /* Expression: BOOL_LITERAL  */
 #line 198 "parser.ypp"
                           { (yyval.u_expr) = new BoolLit(new Primitive((yyvsp[0].u_base_int))); }
-#line 1858 "parser.cpp"
+#line 1864 "parser.cpp"
     break;
 
   case 56: /* Expression: DEREFERENCE Expression  */
 #line 199 "parser.ypp"
                                     { (yyval.u_expr) = new Deref((yyvsp[0].u_expr)); }
-#line 1864 "parser.cpp"
+#line 1870 "parser.cpp"
     break;
 
   case 57: /* Expression: NULLTOKEN  */
 #line 200 "parser.ypp"
                        { (yyval.u_expr) = new IntLit(new Primitive(0)); }
-#line 1870 "parser.cpp"
+#line 1876 "parser.cpp"
     break;
 
   case 58: /* Type: BOOLEAN  */
 #line 203 "parser.ypp"
                { (yyval.u_type) = new TBoolean(); }
-#line 1876 "parser.cpp"
+#line 1882 "parser.cpp"
     break;
 
   case 59: /* Type: CHAR  */
 #line 204 "parser.ypp"
             { (yyval.u_type) = new TCharacter(); }
-#line 1882 "parser.cpp"
+#line 1888 "parser.cpp"
     break;
 
   case 60: /* Type: INTEGER  */
 #line 205 "parser.ypp"
                { (yyval.u_type) = new TInteger(); }
-#line 1888 "parser.cpp"
+#line 1894 "parser.cpp"
     break;
 
   case 61: /* Type: INTPTR  */
 #line 206 "parser.ypp"
               { (yyval.u_type) = new TIntPtr(); }
-#line 1894 "parser.cpp"
+#line 1900 "parser.cpp"
     break;
 
   case 62: /* Type: CHARPTR  */
 #line 207 "parser.ypp"
                { (yyval.u_type) = new TCharPtr(); }
-#line 1900 "parser.cpp"
+#line 1906 "parser.cpp"
     break;
 
   case 63: /* Block: LBRACE Declarations Statements RBRACE  */
 #line 210 "parser.ypp"
                                               { (yyval.u_nested_block) = new Nested_blockImpl((yyvsp[-2].u_decl_list), (yyvsp[-1].u_stat_list)); }
-#line 1906 "parser.cpp"
+#line 1912 "parser.cpp"
     break;
 
 
-#line 1910 "parser.cpp"
+#line 1916 "parser.cpp"
 
       default: break;
     }

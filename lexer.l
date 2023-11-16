@@ -86,10 +86,10 @@ CHAR_LITERAL     \'[^\']\'
 {OCTAL}         { yylval.u_base_int = strtol(yytext, NULL, 8); return INT_LITERAL; }
 {BINARY}        { yylval.u_base_int = strtol(yytext, NULL, 2); return INT_LITERAL; }
 {DECIMAL}       { yylval.u_base_int = atoi(yytext); return INT_LITERAL; }
-{STRING_LITERAL} { int length = strlen(yytext) - 2; // Deduct 2 for the quotation marks
-                    char* literal = (char*) malloc(length + 1); // Allocate memory (+1 for the null terminator)
-                    strncpy(literal, yytext + 1, length); // Copy the string excluding the quotation marks
-                    literal[length] = '\0'; // Null-terminate the string
+{STRING_LITERAL} { int length = strlen(yytext) - 2; 
+                    char* literal = (char*) malloc(length + 1); 
+                    strncpy(literal, yytext + 1, length); 
+                    literal[length] = '\0';
                     yylval.u_base_charptr = literal;
                     return STRING_LITERAL;
                 }
