@@ -56,33 +56,33 @@ extern int yylineno;
  
 /********* ProcImpl ************/
  ProcImpl::ProcImpl(SymName *p1, std::list<Decl_ptr> *p2, Type *p3, Procedure_block *p4)  {
-	// m_symname = p1;
-	// m_decl_list = p2;
-	// m_type = p3;
-	// m_procedure_block = p4;
-	// m_attribute.lineno = yylineno;
-	// m_parent_attribute = NULL;
-	// m_symname->m_parent_attribute = &m_attribute;
- 	// std::list<Decl_ptr>::iterator m_decl_list_iter;
-	// for(m_decl_list_iter = m_decl_list->begin();
-	//   m_decl_list_iter != m_decl_list->end();
-	//   ++m_decl_list_iter){
-	// 	(*m_decl_list_iter)->m_parent_attribute = &m_attribute;
-	// }
-	// m_type->m_parent_attribute = &m_attribute;
- 	// m_procedure_block->m_parent_attribute = &m_attribute;
+	m_symname = p1;
+	m_decl_list = p2;
+	m_type = p3;
+	m_procedure_block = p4;
+	m_attribute.lineno = yylineno;
+	m_parent_attribute = NULL;
+	m_symname->m_parent_attribute = &m_attribute;
+ 	std::list<Decl_ptr>::iterator m_decl_list_iter;
+	for(m_decl_list_iter = m_decl_list->begin();
+	  m_decl_list_iter != m_decl_list->end();
+	  ++m_decl_list_iter){
+		(*m_decl_list_iter)->m_parent_attribute = &m_attribute;
+	}
+	m_type->m_parent_attribute = &m_attribute;
+ 	m_procedure_block->m_parent_attribute = &m_attribute;
   }
  ProcImpl::ProcImpl(const ProcImpl & other) {
-	// m_symname = other.m_symname->clone();
-	// m_decl_list = new std::list<Decl_ptr>;
-	// std::list<Decl_ptr>::iterator m_decl_list_iter;
-	// for(m_decl_list_iter = other.m_decl_list->begin();
-	//   m_decl_list_iter != other.m_decl_list->end();
-	//   ++m_decl_list_iter){
-	// 	m_decl_list->push_back( (*m_decl_list_iter)->clone() );
-	// }
-	// m_type = other.m_type->clone();
-	// m_procedure_block = other.m_procedure_block->clone();
+	m_symname = other.m_symname->clone();
+	m_decl_list = new std::list<Decl_ptr>;
+	std::list<Decl_ptr>::iterator m_decl_list_iter;
+	for(m_decl_list_iter = other.m_decl_list->begin();
+	  m_decl_list_iter != other.m_decl_list->end();
+	  ++m_decl_list_iter){
+		m_decl_list->push_back( (*m_decl_list_iter)->clone() );
+	}
+	m_type = other.m_type->clone();
+	m_procedure_block = other.m_procedure_block->clone();
  }
  ProcImpl &ProcImpl::operator=(const ProcImpl & other) { ProcImpl tmp(other); swap(tmp); return *this; }
  void ProcImpl::swap(ProcImpl & other) {
@@ -92,26 +92,26 @@ extern int yylineno;
 	std::swap(m_procedure_block, other.m_procedure_block);
  }
  ProcImpl::~ProcImpl() {
- 	// delete(m_symname);
- 	// std::list<Decl_ptr>::iterator m_decl_list_iter;
-	// for(m_decl_list_iter = m_decl_list->begin();
-	//   m_decl_list_iter != m_decl_list->end();
-	//   ++m_decl_list_iter){
-	// 	delete( *m_decl_list_iter );
-	// }
-	// delete(m_type);
- 	// delete(m_procedure_block);
+ 	delete(m_symname);
+ 	std::list<Decl_ptr>::iterator m_decl_list_iter;
+	for(m_decl_list_iter = m_decl_list->begin();
+	  m_decl_list_iter != m_decl_list->end();
+	  ++m_decl_list_iter){
+		delete( *m_decl_list_iter );
+	}
+	delete(m_type);
+ 	delete(m_procedure_block);
   }
  void ProcImpl::visit_children( Visitor* v ) {
- 	// m_symname->accept( v );
- 	// std::list<Decl_ptr>::iterator m_decl_list_iter;
-	// for(m_decl_list_iter = m_decl_list->begin();
-	//   m_decl_list_iter != m_decl_list->end();
-	//   ++m_decl_list_iter){
-	// 	(*m_decl_list_iter)->accept( v );
-	// }
-	// m_type->accept( v );
- 	// m_procedure_block->accept( v );
+ 	m_symname->accept( v );
+ 	std::list<Decl_ptr>::iterator m_decl_list_iter;
+	for(m_decl_list_iter = m_decl_list->begin();
+	  m_decl_list_iter != m_decl_list->end();
+	  ++m_decl_list_iter){
+		(*m_decl_list_iter)->accept( v );
+	}
+	m_type->accept( v );
+ 	m_procedure_block->accept( v );
   }
  void ProcImpl::accept(Visitor *v) { v->visitProcImpl(this); }
  ProcImpl *ProcImpl::clone() const { return new ProcImpl(*this); }

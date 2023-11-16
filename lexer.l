@@ -70,8 +70,8 @@ CHAR_LITERAL     \'[^\']\'
 "*"             { return MUL; }
 "&"             { return AMP; }
 "^"             { return DEREFERENCE; }
-"true"          { return TRUE; }
-"false"         { return FALSE; }
+"true"          { yylval.u_base_int = 1; return BOOL_LITERAL; }
+"false"         { yylval.u_base_int = 0; return BOOL_LITERAL; }
 "{"             { return LBRACE; }
 "}"             { return RBRACE; }
 ";"             { return SEMICOLON; }
@@ -82,13 +82,13 @@ CHAR_LITERAL     \'[^\']\'
 ","             { return COMMA; }
 ":"             { return COLON; }
 "|"             { return BAR; }
-{HEX}           { return INT_LITERAL; }
-{OCTAL}         { return INT_LITERAL; }
-{BINARY}        { return INT_LITERAL; }
-{DECIMAL}       { return INT_LITERAL; }
-{STRING_LITERAL} { return STRING_LITERAL; }
-{CHAR_LITERAL}  { return CHAR_LITERAL; }
-{IDENTIFIER}    { return IDENTIFIER; }
+{HEX}           { yylval.u_base_int = strtol(yytext, NULL, 16); return INT_LITERAL; }
+{OCTAL}         { yylval.u_base_int = strtol(yytext, NULL, 8); return INT_LITERAL; }
+{BINARY}        { yylval.u_base_int = strtol(yytext, NULL, 2); return INT_LITERAL; }
+{DECIMAL}       { yylval.u_base_int = atoi(yytext); return INT_LITERAL; }
+{STRING_LITERAL} { yylval.u_base_charptr = strdup(yytext); return STRING_LITERAL; }
+{CHAR_LITERAL}  { yylval.u_base_int = yytext[1]; return CHAR_LITERAL; } 
+{IDENTIFIER}    { yylval.u_base_charptr = strdup(yytext); return IDENTIFIER; }
 
 [\*\(\)\.\+\-\|]  { return *yytext; }
 
